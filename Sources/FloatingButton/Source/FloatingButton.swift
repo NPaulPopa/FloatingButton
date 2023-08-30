@@ -46,10 +46,11 @@ struct FloatingButton: View {
 
                    if !(showPencil ?? false) {
 
-                        Text("New List")
-                            .foregroundColor(.white)
-                            .font(Font.custom("Futura", size: 16))
-                            .minimumScaleFactor(0.8)
+                           Text("New List")
+                           .foregroundColor((showPencil ?? false) ? .red : .white)
+                               .font(Font.custom("Futura", size: 16))
+                               .minimumScaleFactor(0.8)
+                               .animation(.easeOut, value: showPencil)
                     }
                 }
                 .padding()
