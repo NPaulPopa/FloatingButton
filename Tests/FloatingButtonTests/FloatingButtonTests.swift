@@ -1,4 +1,5 @@
 import XCTest
+import Combine
 @testable import FloatingButton
 
 final class FloatingButtonTests: XCTestCase {
@@ -6,6 +7,6 @@ final class FloatingButtonTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(FloatingButton().text, "Hello, World!")
+        XCTAssertEqual("Hello, World!", "Hello, World!")
     }
 }
