@@ -23,3 +23,46 @@ public protocol FloatingButtonViewControllerProtocol: UIViewController, Floating
     func setupSwiftUIFloatingButton()
     func constrainFloatingButton()
 }
+
+//MARK: - Default implementations 
+
+extension FloatingButtonViewControllerProtocol {
+    
+    public var screenSize: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    
+    public func setupButton() {
+        setupSwiftUIFloatingButton()
+        constrainFloatingButton()
+    }
+    
+    public func constrainFloatingButton() {
+        
+        view.addSubview(capsuleFloatingButton)
+        capsuleFloatingButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bottomSpacing: CGFloat = screenSize < 670 ? -60 : (-90 - 62)
+
+        capsuleFloatingButton.layer.cornerRadius = swiftUICapsuleButton.capsuleHeight / 2
+        
+        NSLayoutConstraint.activate([
+            
+            capsuleFloatingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: bottomSpacing),
+            
+            capsuleFloatingButton.widthAnchor.constraint(equalToConstant: swiftUICapsuleButton.capsuleWidth),
+            
+            capsuleFloatingButton.heightAnchor.constraint(equalToConstant: swiftUICapsuleButton.capsuleHeight),
+                    
+            capsuleFloatingButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+    }
+    
+    public func setupSwiftUIFloatingButton() {
+        translationPublisher = PassthroughSubject<CGFloat, Never>()
+        swiftUICapsuleButton = FloatingButton(translation: translationPublisher)
+        
+        let hostingVC = UIHostingController(rootView: swiftUICapsuleButton)
+        capsuleFloatingButton = hostingVC.view
+    }
+}
