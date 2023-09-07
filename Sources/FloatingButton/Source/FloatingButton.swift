@@ -9,7 +9,7 @@ import SwiftUI
 import Themes
 import Combine
 
-struct FloatingButton: View {
+public struct FloatingButton: View {
     
     @State private var buttonHeight: CGFloat?
     @State private var showPencil: Bool?
@@ -19,7 +19,7 @@ struct FloatingButton: View {
         
     let screenWidth: CGFloat = UIScreen.main.bounds.width
     
-    init(translation:  PassthroughSubject<CGFloat, Never>) {
+    public init(translation:  PassthroughSubject<CGFloat, Never>) {
         self.translationPublisher = translation
     }
     
@@ -32,11 +32,9 @@ struct FloatingButton: View {
     var pencilWidth: CGFloat { (capsuleWidth * 0.1436).rounded(toPlaces: 1) }
     var pencilHeight: CGFloat { pencilWidth.rounded(toPlaces: 1) }
 
-    var body: some View {
+    public var body: some View {
         
-        Button {
-            
-        } label: {
+        Button { additemsFloatingButtonTapped() } label: {
 
             HStack(alignment: .center,spacing: 6.7) {
                 Image("newListPencil",bundle: .themes)
@@ -68,6 +66,10 @@ struct FloatingButton: View {
         .buttonStyle(FloatingButtonStyle(cornerRadius: (buttonHeight ?? 0) > 40 ? (buttonHeight ?? 0) / 2 : 40))
         .clipped()
         
+    }
+    
+    private func additemsFloatingButtonTapped() {
+        NotificationCenter.default.post(name: .addItemsFloatingButtonTapped, object: nil)
     }
 }
 
