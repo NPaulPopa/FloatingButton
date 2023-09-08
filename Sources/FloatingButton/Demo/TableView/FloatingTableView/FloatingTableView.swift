@@ -14,17 +14,17 @@ public protocol FloatingScrollDelegate: AnyObject {
     func updateFloatingButtonConstraintsBackToNormal()
 }
 
-public class FloatingButtonTableView: UITableView, UITableViewDelegate {
+public class FloatingButtonTableView: UITableView, UITableViewDelegate, FloatingButtonScrollViewProtocol {
+    
+    public weak var floatingScrollDelegate: FloatingScrollDelegate?
     
     //MARK: - Properties
     
-   public weak var floatingScrollDelegate: FloatingScrollDelegate?
-    
-    var translation: PassthroughSubject<CGFloat, Never>
+    public var translationPublisher: PassthroughSubject<CGFloat, Never>
     private let floatingDataSource = FloatingTableViewDataSource()
 
     public init(translation: PassthroughSubject<CGFloat, Never>) {
-        self.translation = translation
+        self.translationPublisher = translation
         
         super.init(frame: .zero,style: .plain)
         configure()
@@ -57,21 +57,6 @@ public class FloatingButtonTableView: UITableView, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true) }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let contentOffset = scrollView.contentOffset.y
-        
-        translation.send(contentOffset)
-        
-        if contentOffset > 0 {
-        
-        if contentOffset >= -64 {
-            floatingScrollDelegate?.updateFloatingButtonConstraints()
-        }
-            
-        }
-        
-        if contentOffset < -64 {
-           floatingScrollDelegate?.updateFloatingButtonConstraintsBackToNormal()
-        }
+        handleScrollViewThreshold(scrollView)
     }
 }
