@@ -8,7 +8,9 @@
 import UIKit
 import Combine
 
-public protocol FloatingButtonScrollViewProtocol: UIScrollView {
+/// Simply add `handleScrollViewThreshold(_:)` inside the `scrollViewDidScroll` delegate method of your protocol adopter
+///  - Tip: remember to add UIScrollViewConformance and set self as the delegate
+public protocol FloatingButtonScrollViewProtocol: UIScrollView, UIScrollViewDelegate {
     
     var floatingScrollDelegate: FloatingScrollDelegate? { get set }
     var translationPublisher: PassthroughSubject<CGFloat, Never> { get set }
