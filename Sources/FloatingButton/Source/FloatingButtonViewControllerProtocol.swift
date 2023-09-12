@@ -14,8 +14,6 @@ public protocol FloatingButtonViewControllerProtocol: UIViewController, Floating
     
     var screenSize: CGFloat { get }
     var floatingTableView: FloatingButtonScrollViewProtocol { get set }
-    
-    var swiftUICapsuleButton: FloatingButton! { get set }
     var capsuleFloatingButton: UIView! { get set }
     
     func setupButton()
@@ -34,6 +32,10 @@ extension FloatingButtonViewControllerProtocol {
     
     var capsuleHeight: CGFloat {
         swiftUICapsuleButton.capsuleHeight
+    }
+    
+    var swiftUICapsuleButton: FloatingButton {
+        FloatingButton()
     }
     
     public func setupButton() {
@@ -57,7 +59,6 @@ extension FloatingButtonViewControllerProtocol {
     }
     
     public func setupSwiftUIFloatingButton() {
-        swiftUICapsuleButton = FloatingButton()
                         
         let hostingVC = UIHostingController(rootView: swiftUICapsuleButton)
         capsuleFloatingButton = hostingVC.view
