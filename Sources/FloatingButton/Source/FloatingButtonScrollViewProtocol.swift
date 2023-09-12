@@ -13,7 +13,7 @@ import Combine
 public protocol FloatingButtonScrollViewProtocol: UIScrollView, UIScrollViewDelegate {
     
     var floatingScrollDelegate: FloatingScrollDelegate? { get set }
-    var translationPublisher: PassthroughSubject<CGFloat, Never> { get set }
+  //  var translationPublisher: PassthroughSubject<CGFloat, Never> { get set }
     
     ///This method `must be called inside a scrollView's scrollViewDidScroll(_:) method`
     /// - It sends the current vertical contentOffset to the translationPublisher's subcribers
@@ -28,18 +28,17 @@ extension FloatingButtonScrollViewProtocol {
         
         let contentOffset = scrollView.contentOffset.y
         
-        translationPublisher.send(contentOffset)
+        NotificationCenter.default.post(name: .translationDidChange, object: contentOffset)
         
         if contentOffset > 0 {
-
-        if contentOffset >= -64 {
-            floatingScrollDelegate?.updateFloatingButtonConstraints()
+            
+            if contentOffset >= -64 {
+                floatingScrollDelegate?.updateFloatingButtonConstraints()
+            }
         }
-
-        }
-
+        
         if contentOffset < -64 {
-           floatingScrollDelegate?.updateFloatingButtonConstraintsBackToNormal()
+            floatingScrollDelegate?.updateFloatingButtonConstraintsBackToNormal()
         }
     }
 }
