@@ -13,15 +13,8 @@ public struct FloatingButton: View {
     
     @State private var buttonHeight: CGFloat?
     @State private var showPencil: Bool?
-    
-    var translationPublisher: PassthroughSubject<CGFloat, Never>
-    private var cancellables = Set<AnyCancellable>()
-        
+            
     let screenWidth: CGFloat = UIScreen.main.bounds.width
-    
-    public init(translation:  PassthroughSubject<CGFloat, Never>) {
-        self.translationPublisher = translation
-    }
     
     var capsuleWidth: CGFloat { (screenWidth * 0.2765).rounded(toPlaces: 1)}
     var capsuleHeight: CGFloat { (capsuleWidth * 0.428).rounded(toPlaces: 1)}
@@ -56,7 +49,10 @@ public struct FloatingButton: View {
                 .animation(.easeInOut, value: buttonHeight)
                 .background(Color.blue)
         }
-        .onReceive(translationPublisher, perform: { newValue in
+        .onReceive(
+            NotificationCenter.default.publisher(for: .translationDidChange)
+                .compactMap {$0.object as? CGFloat }
+            , perform: { newValue in
             
             withAnimation(.linear(duration: 0.33)) {
                 self.buttonHeight = newValue
@@ -146,6 +142,6 @@ extension FloatingButton {
 
 struct CapsuleFloatingButton_Previews: PreviewProvider {
     static var previews: some View {
-        FloatingButton(translation: PassthroughSubject<CGFloat,Never>())
+        FloatingButton()
     }
 }
