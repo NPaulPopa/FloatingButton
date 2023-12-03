@@ -23,11 +23,11 @@ public class FloatingButtonViewController: UIViewController, FloatingButtonViewC
     public var swiftUICapsuleButton: FloatingButton!
     public var capsuleFloatingButton: UIView!
     
-    public lazy var floatingTableView: FloatingButtonScrollViewProtocol = FloatingButtonTableView(translation: translationPublisher)
+    public lazy var floatingTableView: FloatingButtonScrollViewProtocol = FloatingButtonTableView()
     
     public init() {
         super.init(nibName: nil, bundle: nil)
-        setupButton()
+        setupFloatingButton()
     }
     
     required init?(coder: NSCoder) { fatalError("not been implemented") }
