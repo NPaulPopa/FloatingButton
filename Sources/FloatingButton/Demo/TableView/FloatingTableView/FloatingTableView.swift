@@ -11,7 +11,7 @@ import Combine
 public protocol FloatingScrollDelegate: AnyObject {
     
     func updateFloatingButtonConstraints()
-    func updateFloatingButtonConstraintsBackToNormal()
+    func revertFloatingButtonConstraintsBackToNormal()
 }
 
 public class FloatingButtonTableView: UITableView, UITableViewDelegate, FloatingButtonScrollViewProtocol {
@@ -19,13 +19,10 @@ public class FloatingButtonTableView: UITableView, UITableViewDelegate, Floating
     public weak var floatingScrollDelegate: FloatingScrollDelegate?
     
     //MARK: - Properties
-    
-    public var translationPublisher: PassthroughSubject<CGFloat, Never>
+
     private let floatingDataSource = FloatingTableViewDataSource()
 
-    public init(translation: PassthroughSubject<CGFloat, Never>) {
-        self.translationPublisher = translation
-        
+    public init() {
         super.init(frame: .zero,style: .plain)
         configure()
     }
