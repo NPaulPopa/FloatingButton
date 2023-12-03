@@ -51,6 +51,7 @@ public struct FloatingButton: View {
         }
         .onReceive(
             NotificationCenter.default.publisher(for: .translationDidChange)
+                .receive(on: DispatchQueue.main, options: .none)
                 .compactMap {$0.object as? CGFloat }
             , perform: { newValue in
             
