@@ -9,18 +9,40 @@ import UIKit
 import SwiftUI
 import Combine
 
-/// Step 1: simply add `setupButton()` in the ViewController's `init` and instantiate the floatingTableView with a custom TableView/CollectionView
+/// Use this on a UIViewController subclass to show a floating button that changes its bounds when scrolling beyond a certain treshold
+/// - Step 1: Add `setupFloatingButton()` in the ViewController's `init`
+/// - Step 2: Add `constrainFloatingButton()` AFTER `setupFloatingButton()`
+
+/// ```
+/// class ViewController: FloatingButtonViewControllerProtocol {
+///
+///   init() {
+///        super.init(nibName: nil, bundle: nil)
+///        setupFloatingButton()
+///        constrainFloatingButton()
+///      }
+/// }
+/// ```
+/// - Step 3: Instantiate the floatingTableView with a custom instance of TableView/CollectionView conforming to FloatingButtonScrollViewProtocol
+///
+/// ```
+/// lazy var floatingTableView: FloatingButtonScrollViewProtocol = customTableView
+///
+/// ```
 public protocol FloatingButtonViewControllerProtocol: UIViewController, FloatingScrollDelegate {
     
-    var screenSize: CGFloat { get }
-    var floatingTableView: FloatingButtonScrollViewProtocol { get set }
+    //MARK: - Required
+    
+    var floatingTableView: FloatingButtonScrollViewProtocol { get }
     var capsuleFloatingButton: UIView! { get set }
     
-    func setupButton()
+    //MARK: - Optional
+
+    var screenSize: CGFloat { get }
+    func setupFloatingButton()
     func setupSwiftUIFloatingButton()
     func constrainFloatingButton()
 }
-
 
 //MARK: - Default implementations 
 
@@ -38,7 +60,7 @@ extension FloatingButtonViewControllerProtocol {
         FloatingButton()
     }
     
-    public func setupButton() {
+    public func setupFloatingButton() {
         setupSwiftUIFloatingButton()
     }
     
@@ -72,7 +94,13 @@ extension FloatingButtonViewControllerProtocol {
         self.capsuleFloatingButton.invalidateIntrinsicContentSize()
     }
     
-    public func updateFloatingButtonConstraintsBackToNormal() {
-        self.capsuleFloatingButton.invalidateIntrinsicContentSize()
+    public func revertFloatingButtonConstraintsBackToNormal() {
+//        UIView.animate(withDuration: 1.2, delay: 0.0, options: .curveEaseInOut) {
+//            self.capsuleFloatingButton.alpha = 0
+//            
+//        } completion: { _ in
+//           self.capsuleFloatingButton.alpha = 1
+//            self.capsuleFloatingButton.invalidateIntrinsicContentSize()
+//        }
     }
 }
