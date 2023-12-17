@@ -10,13 +10,14 @@ let package = Package(
         .library(name: "FloatingButton",targets: ["FloatingButton"]),
     ],
     dependencies: [
-        .package(name: "Themes", path: "../Themes"),
+        
+        .package(url: "https://github.com/NPaulPopa/ItemsThemes.git", branch: "main"),
     ],
     
     targets: [
         .target(name: "FloatingButton", dependencies: [
             
-            .productItem(name: "Themes", package: "Themes", condition: nil),
+            .productItem(name: "Themes", package: "ItemsThemes", condition: nil),
         ]),
         
         .testTarget(name: "FloatingButtonTests", dependencies: ["FloatingButton"]),

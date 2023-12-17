@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Themes",
+        "repositoryURL": "https://github.com/NPaulPopa/ItemsThemes.git",
+        "state": {
+          "branch": "main",
+          "revision": "8180286ba91eefbcadacb4f3b9acae659033d2dc",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
